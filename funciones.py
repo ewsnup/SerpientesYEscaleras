@@ -7,8 +7,8 @@ def guardar_puntaje(nombre: str, puntos: int):
         puntaje.write(f"\n{nombre},{puntos}")
 
 def estado_de_juego(respuesta:str) -> bool:
-    '''Valida la respuesta del usuario de si quiere comenzar a jugar
-        o si quiere seguir jugando.'''
+    '''Se le pregunta al usuario si quiere comenzar a jugar 
+        o si quiere seguir jugando y valida la respuesta.'''
     respuesta = respuesta.upper()
     while respuesta != "S" and respuesta != "N":
         respuesta = input("Respuesta inválida. Ingrese (S/N): ").upper()
