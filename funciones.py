@@ -3,12 +3,12 @@ import random
 
 def guardar_puntaje(nombre: str, puntos: int):
     '''Guarda el nombre y el puntaje del jugador.'''
-    with open("Score.csv", "a") as puntajes:
-        puntajes.write(f"\n{nombre},{puntos}")
+    with open("Score.csv", "a") as puntaje:
+        puntaje.write(f"\n{nombre},{puntos}")
 
 def estado_de_juego(respuesta:str) -> bool:
-    '''Se le pregunta al usuario si quiere comenzar a jugar 
-        o si quiere seguir jugando y valida la respuesta.'''
+    '''Valida la respuesta del usuario de si quiere comenzar a jugar
+        o si quiere seguir jugando.'''
     respuesta = respuesta.upper()
     while respuesta != "S" and respuesta != "N":
         respuesta = input("Respuesta inválida. Ingrese (S/N): ").upper()
@@ -46,9 +46,9 @@ def ejecutar_movimiento(pos_actual: int, es_correcta: bool, tablero: list) -> in
 
 def obtener_pregunta_aleatoria(preguntas_copia: list) -> bool:
     '''Se selecciona una pregunta aleatoria y se remueve la pregunta ya hecha'''
-    pregunta_actual = None  # Valor por defecto (evita UnboundLocalError)
+    pregunta_actual = None 
     
-    if preguntas_copia:  # Si la lista NO está vacía
+    if preguntas_copia: 
         pregunta_actual = random.choice(preguntas_copia)
         preguntas_copia.remove(pregunta_actual)
     
