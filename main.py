@@ -1,7 +1,7 @@
 from auxiliares import *
-from funciones import *
+from Funciones import *
 
-if estado_de_juego(input("¿Desea jugar serpientes y escaleras? (S/N): ")):
+if validar_entrada(input("¿Desea jugar serpientes y escaleras? (S/N): ")):
     
     print("\n=== TRIVIA SERPIENTES Y ESCALERAS ===")
     nombre = input("Ingrese su nombre: ")
@@ -9,12 +9,13 @@ if estado_de_juego(input("¿Desea jugar serpientes y escaleras? (S/N): ")):
     print(f"\n¡Bienvenido al juego, {nombre}!")
     print(f"Comienzas en la posición {pos_actual} del tablero.")
 
-    while True:
+    comenzar = True
+    while comenzar:
         # Obtener pregunta y mostrar
         pregunta_actual = obtener_pregunta_aleatoria(preguntas_copia)
         if pregunta_actual == None:
             print("\nYa no hay preguntas.")
-            break
+            comenzar = False
         mostrar_pregunta(pregunta_actual)
 
         #Obtiene y valida la respuesta
@@ -23,20 +24,13 @@ if estado_de_juego(input("¿Desea jugar serpientes y escaleras? (S/N): ")):
 
             # Calcular nueva posición
         pos_actual = ejecutar_movimiento(pos_actual, es_correcta, tablero)
-            
-        # Verificar condiciones de fin de juego
-        if pos_actual == 0:
-            print("\n¡Oh no! Has caído en el casillero perdedor.")
-            break
-        elif pos_actual == 30:
-            print("\n¡Felicidades! Has llegado al casillero ganador.")
-            break
-            
+        comenzar = fin_del_juego(pos_actual)
+
         # Preguntar si quiere continuar
         continuar = input("¿Desea seguir jugando serpientes y escaleras? (S/N): ")
-        if estado_de_juego(continuar) == False:
+        if validar_entrada(continuar) == False:
             print("\nSaliendo del juego...")
-            break
+            comenzar = False
 
     print(f"\nJuego terminado. Tu posición final: {pos_actual}")
     guardar_puntaje(nombre, pos_actual)
