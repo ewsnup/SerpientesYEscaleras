@@ -6,16 +6,15 @@ def guardar_puntaje(nombre: str, puntos: int):
     with open("Score.csv", "a") as puntaje:
         puntaje.write(f"\n{nombre},{puntos}")
 
-def estado_de_juego(respuesta:str) -> bool:
+def validar_entrada(respuesta:str) -> bool:
     '''Se le pregunta al usuario si quiere comenzar a jugar 
         o si quiere seguir jugando y valida la respuesta.'''
+    retorno = False
     respuesta = respuesta.upper()
     while respuesta != "S" and respuesta != "N":
         respuesta = input("Respuesta inválida. Ingrese (S/N): ").upper()
     if respuesta == "S":
         retorno = True
-    else:
-        retorno = False
     return retorno
 
 def validar_respuesta(respuesta:str, pregunta_actual: dict) -> bool:
@@ -30,12 +29,12 @@ def ejecutar_movimiento(pos_actual: int, es_correcta: bool, tablero: list) -> in
     Calcula la nueva posición del jugador en el tablero,
     basándose en si su respuesta fue correcta o no.
     '''
-    direccion = 1
+    movimiento = 1
     if es_correcta == False:
-        direccion = -1
-    pos_actual += direccion
+        movimiento = -1
+    pos_actual += movimiento
     while tablero[pos_actual] != 0:
-        pos_actual += (tablero[pos_actual] * direccion)
+        pos_actual += (tablero[pos_actual] * movimiento)
 
     if es_correcta:
         print(f"¡Correcto! Nueva posición: {pos_actual}\n")
@@ -60,3 +59,18 @@ def mostrar_pregunta(pregunta: list):
     print(f"a) {pregunta['respuesta_a']}")
     print(f"b) {pregunta['respuesta_b']}")
     print(f"c) {pregunta['respuesta_c']}")
+
+def fin_del_juego(pos_actual:int) -> bool:
+    '''Controla el estado de juego. Si el usuario llega a 0, pierde y termina el juego.
+        Si el usuario llega a 30, gana y termina el juego.
+    '''
+    estado = True
+    if pos_actual == 0:
+        print("\n¡Oh no! Has caído en el casillero perdedor.")
+        estado = False
+    elif pos_actual == 30:
+        print("\n¡Felicidades! Has llegado al casillero ganador.")
+        estado = False
+
+    return estado
+            
